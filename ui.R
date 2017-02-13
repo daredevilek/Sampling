@@ -38,8 +38,8 @@ shinyUI(fluidPage(theme = 'bootstrap.css',
     # Show a plot of the generated distribution
     mainPanel(
       tabsetPanel(
-      tabPanel('Tabela'),
-      plotOutput("distPlot"))
+      tabPanel(title = 'Tabela', tableOutput('no_name_yet2')),
+      tabPanel(title = "Wykres", plotOutput('no_name_yet')))
     )
   )
 ))
