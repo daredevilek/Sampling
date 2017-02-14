@@ -1,7 +1,6 @@
 library(shiny)
 library(pracma) # library for the function nthroot
 library(plyr)
-library(ggplot2)
 library(plotly)
 
 #cz1 <- c(0.9) #czulosc
