@@ -1,7 +1,7 @@
 library(shiny)
 
 shinyUI(fluidPage(theme = 'bootstrap.css',
-  titlePanel("Próbkowanie i Prawdopodobieństwo"),
+  titlePanel("Próbkowanie i prawdopodobieństwo"),
 
   # Sidebar with a slider input for number of bins
   sidebarLayout(position = 'left',
