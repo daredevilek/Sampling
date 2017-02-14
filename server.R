@@ -28,24 +28,33 @@ shinyServer(function(input, output, session) {
   #i danym prawdopodobienstwie wykrycia
   ratei <- function() {
   samN3 <- seq(1,input$sampleN3)
-  infRa3 <- (1-(nthroot((1-input$probaB3), samN3)))*1000
+  infRa3 <- ((1-(nthroot((1-input$probaB3), samN3)))*1000)/input$czT
   iR3 <- as.data.frame(cbind(infRa3, samN3))
   }
   
   output$wykresP <- renderPlotly({
     if(input$analyseType == "pVal"){
       plotDF <- data.frame(xvar = probability1()$ne1, yvar = probability1()$pe1)
-    }
+      theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + 
+        geom_line() +
+        labs(x = 'Wielkość próby', y = 'Prawdopodbieństwo wykrycia')
+      }
     
     else if(input$analyseType == "mWP"){
       plotDF <- data.frame(xvar = smp()$infRa2, yvar = smp()$sampleN2)
-    }
+      theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + 
+        geom_line() +
+        labs(x = 'Częstość infekcji', y = 'Wielkość próby')
+      }
     
     else{
       plotDF <- data.frame(xvar = ratei()$samN3, yvar = ratei()$infRa3)
-    }
+      theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) +
+        geom_line() +
+        labs(x = 'Wielkość próby', y = 'Graniczna częstość infekcji (na 1000)')
+      }
       
-    theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + geom_line()
+    #theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + geom_line()
     ggplotly(theGraph)
     #if (input$analyseType == 'pVal') {
     #plot(probability1()$pe1~probability1()$ne1,
