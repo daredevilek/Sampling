@@ -2,7 +2,7 @@ library(shiny)
 library(pracma) # library for the function nthroot
 library(plyr)
 library(ggplot2)
-#library(plotly)
+library(plotly)
 
 #cz1 <- c(0.9) #czulosc
 
@@ -32,7 +32,7 @@ shinyServer(function(input, output, session) {
   iR3 <- as.data.frame(cbind(infRa3, samN3))
   }
   
-  output$wykresP <- renderPlot({
+  output$wykresP <- renderPlotly({
     if(input$analyseType == "pVal"){
       plotDF <- data.frame(xvar = probability1()$ne1, yvar = probability1()$pe1)
     }
@@ -46,7 +46,7 @@ shinyServer(function(input, output, session) {
     }
       
     theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + geom_line()
-      print(theGraph)
+    ggplotly(theGraph)
     #if (input$analyseType == 'pVal') {
     #plot(probability1()$pe1~probability1()$ne1,
     #     ylim = c(0,1),

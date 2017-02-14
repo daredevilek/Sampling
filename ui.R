@@ -54,7 +54,7 @@ shinyUI(fluidPage(theme = 'bootstrap.css',
       tabsetPanel(
       #tabPanel(title = 'tabela', tableOutput('no_name_yet2'), value = 'tabela'),
       tabPanel(title = "Wykres",
-               plotOutput(outputId = 'wykresP', height = '600px')
+               plotlyOutput(outputId = 'wykresP', height = '600px')
       #tabPanel(title ='Wykres',
       #         plotOutput(outputId = 'wykresS', height = '600px')))
     )
