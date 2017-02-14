@@ -1,7 +1,7 @@
 library(shiny)
 library(pracma) # library for the function nthroot
 library(plyr)
-library(plotly)
+require(plotly)
 
 #cz1 <- c(0.9) #czulosc
 
