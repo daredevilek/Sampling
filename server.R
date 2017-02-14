@@ -25,11 +25,11 @@ shinyServer(function(input, output, session) {
   
   #poziom inekcyjnosci wykrywany przy danej liczebosci proby
   #i danym prawdopodobienstwie wykrycia
-  #n5<-seq(1:1000)
-  #p5<-0.8
-  #upInf<-(1-(nthroot((1-p5),n5)))*1000
-  #p6<-0.95
-  #upInf_2<-(1-(nthroot((1-p6),n5)))*1000
+  ratei <- function() {
+  samN3 <- seq(0:input$sampleN3)
+  infRa3 <- (1-(nthroot((1-input$probaB3), samN3)))*1000
+  iR3 <- as.data.frame(cbind(infRa3, samN3))
+  }
   
   output$wykresP <- renderPlot({
     if (input$analyseType == 'pVal') {
@@ -40,12 +40,19 @@ shinyServer(function(input, output, session) {
          type = 'l')
     abline(h = 0.95, col = 'red', lty = c(3))
     }
-    #output$wykresN <- renderPlot({
+    
     if (input$analyseType == 'mWP') {
     plot(smp()$sampleN2~smp()$infRa2,
          xlab = 'Poziom infekcji',
          ylab = 'Minimalna wielkość próby',
          type = 'l')
+    }
+    
+    if (input$analyseType == 'gPI') {
+      plot(ratei()$infRa3~ratei()$samN3,
+           xlab = 'Liczebność próby',
+           ylab = 'Graniczny poziom infekcji',
+           type = 'l')
     }
   })
 })
