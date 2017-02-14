@@ -2,7 +2,7 @@ name: sampling
 title:
 account: czyzu-shiny
 server: shinyapps.io
-appId: 156876
-bundleId: 711649
+appId: 156886
+bundleId: 711694
 url: https://czyzu-shiny.shinyapps.io/sampling/
-when: 1487106394.54907
+when: 1487109406.95673
