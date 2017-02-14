@@ -1,4 +1,7 @@
 library(shiny)
+library(pracma) # library for the function nthroot
+library(plyr)
+require(plotly)
 
 shinyUI(fluidPage(theme = 'bootstrap.css',
   titlePanel("Próbkowanie i prawdopodobieństwo"),
