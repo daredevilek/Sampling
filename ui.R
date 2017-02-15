@@ -9,7 +9,7 @@ shinyUI(fluidPage(theme = 'bootstrap.css',
   # Sidebar with a slider input for number of bins
   sidebarLayout(position = 'left',
     sidebarPanel(
-      radioButtons(inputId = 'analyseType',
+      selectInput(inputId = 'analyseType',
                    label = 'Wybierz typ analizy',
                    choices = list('Prawdopodobieństwo wykrycia' = 'pVal',
                                   'Min. wielkość próby' = 'mWP',
