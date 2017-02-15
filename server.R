@@ -10,7 +10,7 @@ shinyServer(function(input, output, session) {
 
   #prawdopodobienstwo wykrycia
   probability1 <- function(){
-    sampleN1 <- seq(input$minNumber, input$maxNumber)
+    sampleN1 <- seq(input$mmNumber[1], input$mmNumber[2])
     probab1 <- 1-(1-input$infR*input$czT)^sampleN1
     list(pe1 = probab1, ne1 = sampleN1)
   }
@@ -18,7 +18,7 @@ shinyServer(function(input, output, session) {
   #minimalna wielkosc proby do wykrycia danego poziomu infekcyjnosci
   #z danym prawdopodobienstwem
   smp <- function(){
-   infRa2 <- seq(input$minInf, input$maxInf, 0.0005)
+   infRa2 <- seq(input$mmInf[1], input$mmInf[2], 0.0005)
    sampleN2 <- (log(1-input$probaB)/log(1-infRa2))/input$czT
    saN2 <-as.data.frame(cbind(sampleN2,infRa2))
   }
@@ -26,7 +26,7 @@ shinyServer(function(input, output, session) {
   #poziom inekcyjnosci wykrywany przy danej liczebosci proby
   #i danym prawdopodobienstwie wykrycia
   ratei <- function() {
-  samN3 <- seq(1,input$sampleN3)
+  samN3 <- seq(1, input$sampleN3)
   infRa3 <- ((1-(nthroot((1-input$probaB3), samN3)))*1000)/input$czT
   iR3 <- as.data.frame(cbind(infRa3, samN3))
   }
