@@ -3,71 +3,140 @@ library(pracma) # library for the function nthroot
 library(plyr)
 require(plotly)
 
-shinyUI(fluidPage(theme = 'bootstrap.css',
-  titlePanel("Próbkowanie i prawdopodobieństwo"),
-
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(position = 'left',
-    sidebarPanel(
-      selectInput(inputId = 'analyseType',
-                   label = 'Wybierz typ analizy',
-                   choices = list('Prawdopodobieństwo wykrycia' = 'pVal',
-                                  'Min. wielkość próby' = 'mWP',
-                                  'Graniczny poziom infekcyjności' = 'gPI')),
-      sliderInput(inputId = 'czT',
-                  label = 'Czułość testu',
-                  min = 0.60, max = 1.00, value = 0.90, step = 0.05),
-      conditionalPanel(condition = "input.analyseType == 'mWP'", 
-        sliderInput(inputId = 'probaB',
+shinyUI(
+  navbarPage(
+    'Próbkowanie i prawdopodobieństwo',
+    theme = 'bootstrap.css',
+    inverse = T,
+    #pierwzy tab----
+    tabPanel(
+      'Prawdopodobieństwo wykrycia',
+      sidebarLayout(
+        position = 'left',
+        sidebarPanel(
+          #slider czulosc----
+          sliderInput(
+            inputId = 'czT',
+            label = 'Czułość testu',
+            min = 0.60, max = 1.00, value = 0.90,step = 0.05
+            ),
+          #slider poziom inf----
+          sliderInput(
+            inputId = "infR",
+            label = "Poziom infekcji",
+            min = 0.000, max = 0.0500, value = 0.0030, step = 0.0005, sep = ''
+            ),
+          #slider n proby----
+          sliderInput(
+            inputId = 'mmNumber',
+            label = 'Liczebność próby (min - max)',
+            min = 25, max = 3600, step = 25, value = c(200, 1000)
+            ),
+          br(),
+          #footer----
+          p(
+            'Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
+            'dla', a('R Studio', href = 'http://www.rstudio.com')
+          ),
+          p(
+            'na podstawie',
+            a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')
+          )),
+          #main panel----
+          mainPanel(tabsetPanel(
+            tabPanel(
+              title = "Wykres", 
+              plotlyOutput(outputId = 'wykresP', height = '600px')),
+            tabPanel(
+              title = 'Tabela' #tableOutput('no_name_yet2'), value = 'tabela'
+              )))
+        )),
+    #drugi tab----
+    tabPanel(
+      'Min. wielkość próby',
+      sidebarLayout(
+        position = 'left',
+        sidebarPanel(
+          #slider czulosc----
+          sliderInput(
+            inputId = 'czT',
+            label = 'Czułość testu',
+            min = 0.60, max = 1.00, value = 0.90,step = 0.05
+            ),
+          #slider p wykrycia----
+          sliderInput(
+            inputId = 'probaB',
             label = 'Prawdopodobieństwo wykrycia',
-            min = 0.01, max = 1.00, value = 0.75, step = 0.01),
-        sliderInput(inputId = 'mmInf',
-                    label = 'Poziom infekcji (min - max)',
-                    min = 0.000, max = 0.050,
-                    value = c(0.001, 0.030), step = 0.0005, sep = '')),
-        #numericInput(inputId = 'minInf',
-        #             label = 'Minimalny poziom infekcji',
-        #             min = 0.000, max = 0.050, value = 0.001),
-        #numericInput(inputId = 'maxInf',
-        #             label = 'Maksymalny poziom infekcji',
-        #             min = 0.000, max = 0.050, value = 0.030)),
-      conditionalPanel(condition = "input.analyseType == 'pVal'", 
-        sliderInput(inputId = "infR",
-                    label = "Poziom infekcji",
-                    min = 0.000, max = 0.0500, value = 0.0030,
-                    step = 0.0005, sep =''),
-        sliderInput(inputId = 'mmNumber',
-                    label = 'Liczebność próby (min - max)',
-                    min = 25, max = 3600, step = 25, value = c(200,1000))),
-        #numericInput(inputId = 'minNumber',
-        #             label = 'Minimalna liczebność próby',
-        #             val = 200, min = 0),
-        #numericInput(inputId = 'maxNumber',
-        #             label = 'Maksymalna liczebność próby (max. 3600)',
-        #             val = 2200, max = 3600)),
-      conditionalPanel(condition = "input.analyseType == 'gPI'", 
-        sliderInput(inputId = "probaB3",
-                    label = "Prawdopodobieństwo wykrycia",
-                    min = 0.500, max = 1.000, value = 0.800, step = 0.005),
-        sliderInput(inputId = 'sampleN3',
-                     label = 'Liczebność próby',
-                     val = 800, min = 0, max = 4000, step = 25)),
-    br(),
-    p('Aplikacja zbudowana w', 
-      a('Shiny', href = 'http://www.rstudio.com/shiny'), 'dla', 
-      a('R Studio', href = 'http://www.rstudio.com')),
-    p('na podstawie', a('kodu Renke Luekhen.', 
-                        href = 'https://goo.gl/FopD9R'))
-    ),
-
-    # Show a plot of the generated distribution
-    mainPanel(
-      tabsetPanel(
-      #tabPanel(title = 'tabela', tableOutput('no_name_yet2'), value = 'tabela'),
-      tabPanel(title = "Wykres",
-               plotlyOutput(outputId = 'wykresP', height = '600px')
-      #tabPanel(title ='Wykres',
-      #         plotOutput(outputId = 'wykresS', height = '600px')))
-    )
-  )
-))))
+            min = 0.01, max = 1.00, value = 0.75, step = 0.01
+            ),
+          #slider p inf----
+          sliderInput(
+            inputId = 'mmInf',
+            label = 'Poziom infekcji (min - max)',
+            min = 0.000, max = 0.050, value = c(0.001, 0.030), step = 0.0005, sep = ''
+            ),
+          br(),
+          #footer----
+          p(
+            'Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
+            'dla', a('R Studio', href = 'http://www.rstudio.com')
+          ),
+          p(
+            'na podstawie',
+            a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')
+          )),
+          #main panel----
+          mainPanel(tabsetPanel(
+            tabPanel(
+              title = "Wykres", 
+              plotlyOutput(outputId = 'wykresP', height = '600px')),
+            tabPanel(
+              title = 'Tabela' #tableOutput('no_name_yet2'), value = 'tabela'
+              )))
+        )),
+    #trzeci tab----
+    tabPanel(
+      'Graniczna wielkość infekcji',
+      sidebarLayout(
+        position = 'left',
+        sidebarPanel(
+          #slider czulosc----
+          sliderInput(
+            inputId = 'czT',
+            label = 'Czułość testu',
+            min = 0.60, max = 1.00, value = 0.90,step = 0.05
+          ),
+          #Slider ProbaB3----
+          sliderInput(
+            inputId = "probaB3",
+            label = "Prawdopodobieństwo wykrycia",
+            min = 0.500, max = 1.000, value = 0.800, step = 0.005
+          ),
+          #slider SampleN3----
+          sliderInput(
+            inputId = 'sampleN3',
+            label = 'Liczebność próby',
+            val = 800, min = 0, max = 4000, step = 25
+        ),
+        br(),
+        #footer----
+        p(
+          'Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
+          'dla', a('R Studio', href = 'http://www.rstudio.com')
+        ),
+        p(
+          'na podstawie',
+          a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')
+        )),
+        #main panel----
+      mainPanel(tabsetPanel(
+        tabPanel(
+          title = "Wykres", 
+          plotlyOutput(outputId = 'wykresP', height = '600px')),
+        tabPanel(
+          title = 'Tabela' #tableOutput('no_name_yet2'), value = 'tabela'
+        )))
+    ))))
+    
+    
+    
