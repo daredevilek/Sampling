@@ -30,7 +30,7 @@ shinyServer(function(input, output, session) {
   infRa3 <- ((1-(nthroot((1-input$probaB3), samN3)))*1000)/input$czT
   iR3 <- as.data.frame(cbind(infRa3, samN3))
   }
-  
+  #zmienic warunki dla wykresow
   output$wykresP <- renderPlotly({
     if(input$analyseType == "pVal"){
       plotDF <- data.frame(xvar = probability1()$ne1, yvar = probability1()$pe1)
