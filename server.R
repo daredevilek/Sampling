@@ -17,7 +17,7 @@ shinyServer(function(input, output, session) {
     probabDF <- as.data.frame(cbind('p'= probab1, 'N' = sampleN1))
     tablePR <- DT::datatable(data.frame( 'N' = sampleN1, 'p'= probab1),
                              class = 'stripe hover dt-head-center order-column',
-                             rownames = F, style = 'bootstrap', fillContainer = F)
+                             rownames = F, style = 'bootstrap')
     list(tabP = tablePR, prDF = probabDF)
     #list(pe1 = probab1, ne1 = sampleN1)
   }
