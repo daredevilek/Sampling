@@ -6,8 +6,7 @@ require(plotly)
 shinyUI(
   navbarPage(
     'Próbkowanie i prawdopodobieństwo',
-    theme = 'bootstrap.css',
-    inverse = T,
+    theme = 'bootstrap.css', inverse = T,
     #pierwzy tab----
     tabPanel(
       'Prawdopodobieństwo wykrycia',
@@ -32,21 +31,12 @@ shinyUI(
             label = 'Liczebność próby (min - max)',
             min = 25, max = 3600, step = 25, value = c(200, 1000)
             ),
-          br(),
-          #footer----
-          p(
-            'Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
-            'dla', a('R Studio', href = 'http://www.rstudio.com')
-          ),
-          p(
-            'na podstawie',
-            a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')
-          )),
+          br()),
           #main panel----
-          mainPanel(tabsetPanel(
+          mainPanel(tabsetPanel(id = 'TBP',
             tabPanel(
               title = "Wykres", 
-              plotlyOutput(outputId = 'wykresP', height = '600px')),
+              plotlyOutput(outputId = 'wykresP', height = '600px'), value ='pVal'),
             tabPanel(
               title = 'Tabela' #tableOutput('no_name_yet2'), value = 'tabela'
               )))
@@ -75,28 +65,19 @@ shinyUI(
             label = 'Poziom infekcji (min - max)',
             min = 0.000, max = 0.050, value = c(0.001, 0.030), step = 0.0005, sep = ''
             ),
-          br(),
-          #footer----
-          p(
-            'Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
-            'dla', a('R Studio', href = 'http://www.rstudio.com')
-          ),
-          p(
-            'na podstawie',
-            a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')
-          )),
+          br()),
           #main panel----
-          mainPanel(tabsetPanel(
+          mainPanel(tabsetPanel(id = 'TBP',
             tabPanel(
               title = "Wykres", 
-              plotlyOutput(outputId = 'wykresP', height = '600px')),
+              plotlyOutput(outputId = 'wykresN', height = '600px'), value = 'mWP'),
             tabPanel(
               title = 'Tabela' #tableOutput('no_name_yet2'), value = 'tabela'
               )))
         )),
     #trzeci tab----
     tabPanel(
-      'Graniczna wielkość infekcji',
+      'Graniczna wielkość infekcji', 
       sidebarLayout(
         position = 'left',
         sidebarPanel(
@@ -118,25 +99,24 @@ shinyUI(
             label = 'Liczebność próby',
             val = 800, min = 0, max = 4000, step = 25
         ),
-        br(),
-        #footer----
-        p(
-          'Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
-          'dla', a('R Studio', href = 'http://www.rstudio.com')
-        ),
-        p(
-          'na podstawie',
-          a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')
-        )),
+        br()),
         #main panel----
-      mainPanel(tabsetPanel(
+      mainPanel(tabsetPanel(id = 'TBP',
         tabPanel(
           title = "Wykres", 
-          plotlyOutput(outputId = 'wykresP', height = '600px')),
+          plotlyOutput(outputId = 'wykresG', height = '600px'), value = 'gPI'),
         tabPanel(
           title = 'Tabela' #tableOutput('no_name_yet2'), value = 'tabela'
         )))
-    ))))
+    )),
+    #footer----
+    tags$div(class = 'panel-footer', style = 
+                'position: fixed; display: block;
+                bottom: 5px; margin: 0; left: 0; right = 0; width = 100%',  
+                tags$p('Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
+                  'dla', a('R Studio', href = 'http://www.rstudio.com') , 'na podstawie',
+                  a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')
+                ))))
     
     
     

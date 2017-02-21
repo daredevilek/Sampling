@@ -32,48 +32,27 @@ shinyServer(function(input, output, session) {
   }
   #zmienic warunki dla wykresow
   output$wykresP <- renderPlotly({
-    if(input$analyseType == "pVal"){
-      plotDF <- data.frame(xvar = probability1()$ne1, yvar = probability1()$pe1)
-      theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + 
+      plotDFP <- data.frame(xvar = probability1()$ne1, yvar = probability1()$pe1)
+      theGraphP <- ggplot(plotDFP, aes(x = xvar, y = yvar)) + 
         geom_line() +
         labs(x = 'Wielkość próby', y = 'Prawdopodbieństwo wykrycia')
-      }
-    
-    else if(input$analyseType == "mWP"){
-      plotDF <- data.frame(xvar = smp()$infRa2, yvar = smp()$sampleN2)
-      theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + 
+    ggplotly(theGraphP)
+  })
+  
+  output$wykresN <- renderPlotly({
+      plotDFN <- data.frame(xvar = smp()$infRa2, yvar = smp()$sampleN2)
+      theGraphN <- ggplot(plotDFN, aes(x = xvar, y = yvar)) + 
         geom_line() +
         labs(x = 'Częstość infekcji', y = 'Wielkość próby')
-      }
-    
-    else{
-      plotDF <- data.frame(xvar = ratei()$samN3, yvar = ratei()$infRa3)
-      theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) +
+      ggplotly(theGraphN)
+  })
+  
+  output$wykresG <- renderPlotly({
+      plotDFG <- data.frame(xvar = ratei()$samN3, yvar = ratei()$infRa3)
+      theGraphG <- ggplot(plotDFG, aes(x = xvar, y = yvar)) +
         geom_line() +
         labs(x = 'Wielkość próby', y = 'Graniczna częstość infekcji (na 1000)')
-      }
-      
-    #theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + geom_line()
-    ggplotly(theGraph)
-    #if (input$analyseType == 'pVal') {
-    #plot(probability1()$pe1~probability1()$ne1,
-    #     ylim = c(0,1),
-    #     xlab = 'Wielkość próby',
-    #     ylab = 'Prawdopodobieństwo wykrycia',
-    #     type = 'l')
-    #abline(h = 0.95, col = 'red', lty = c(3))
-    #}
-    #if (input$analyseType == 'mWP') {
-    #plot(smp()$sampleN2~smp()$infRa2,
-    #     xlab = 'Poziom infekcji',
-    #     ylab = 'Minimalna wielkość próby',
-    #     type = 'l')
-    #}
-    #if (input$analyseType == 'gPI') {
-    #  plot(ratei()$infRa3~ratei()$samN3,
-    #       xlab = 'Liczebność próby',
-    #       ylab = 'Graniczny poziom infekcji',
-    #       type = 'l')
-    #}
+      ggplotly(theGraphG)
   })
+  #theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + geom_line()
 })
