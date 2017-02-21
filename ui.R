@@ -2,11 +2,13 @@ library(shiny)
 library(pracma) # library for the function nthroot
 library(plyr)
 require(plotly)
+library(DT)
 
 shinyUI(
   navbarPage(
     'Próbkowanie i prawdopodobieństwo',
-    theme = 'bootstrap.css', inverse = T,
+    #includeCSS('sliders.css'), 
+    theme = 'bootstrap.css', inverse = T, 
     #pierwzy tab----
     tabPanel(
       'Prawdopodobieństwo wykrycia',
@@ -15,7 +17,7 @@ shinyUI(
         sidebarPanel(
           #slider czulosc----
           sliderInput(
-            inputId = 'czT',
+            inputId = 'czTp',
             label = 'Czułość testu',
             min = 0.60, max = 1.00, value = 0.90,step = 0.05
             ),
@@ -33,12 +35,12 @@ shinyUI(
             ),
           br()),
           #main panel----
-          mainPanel(tabsetPanel(id = 'TBP',
+          mainPanel(tabsetPanel(
             tabPanel(
               title = "Wykres", 
-              plotlyOutput(outputId = 'wykresP', height = '600px'), value ='pVal'),
+              plotlyOutput(outputId = 'wykresP', height = '600px')),
             tabPanel(
-              title = 'Tabela' #tableOutput('no_name_yet2'), value = 'tabela'
+              title = 'Tabela', DT::dataTableOutput('tabelaP')
               )))
         )),
     #drugi tab----
@@ -49,7 +51,7 @@ shinyUI(
         sidebarPanel(
           #slider czulosc----
           sliderInput(
-            inputId = 'czT',
+            inputId = 'czTn',
             label = 'Czułość testu',
             min = 0.60, max = 1.00, value = 0.90,step = 0.05
             ),
@@ -67,12 +69,12 @@ shinyUI(
             ),
           br()),
           #main panel----
-          mainPanel(tabsetPanel(id = 'TBP',
+          mainPanel(tabsetPanel(
             tabPanel(
               title = "Wykres", 
-              plotlyOutput(outputId = 'wykresN', height = '600px'), value = 'mWP'),
+              plotlyOutput(outputId = 'wykresN', height = '600px')),
             tabPanel(
-              title = 'Tabela' #tableOutput('no_name_yet2'), value = 'tabela'
+              title = 'Tabela', DT::dataTableOutput('tabelaN')
               )))
         )),
     #trzeci tab----
@@ -83,7 +85,7 @@ shinyUI(
         sidebarPanel(
           #slider czulosc----
           sliderInput(
-            inputId = 'czT',
+            inputId = 'czTg',
             label = 'Czułość testu',
             min = 0.60, max = 1.00, value = 0.90,step = 0.05
           ),
@@ -101,12 +103,12 @@ shinyUI(
         ),
         br()),
         #main panel----
-      mainPanel(tabsetPanel(id = 'TBP',
+      mainPanel(tabsetPanel(
         tabPanel(
           title = "Wykres", 
-          plotlyOutput(outputId = 'wykresG', height = '600px'), value = 'gPI'),
+          plotlyOutput(outputId = 'wykresG', height = '600px')),
         tabPanel(
-          title = 'Tabela' #tableOutput('no_name_yet2'), value = 'tabela'
+          title = 'Tabela', DT::dataTableOutput('tabelaG')
         )))
     )),
     #footer----
