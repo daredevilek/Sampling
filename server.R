@@ -48,19 +48,13 @@ shinyServer(function(input, output, session) {
   output$wykresP <- renderPlotly({
       plotDFP <- data.frame(probability1()$prDF)
       hovertxtp <- paste("p: ", round(plotDFP$p, digits = 2), "<br>",
-                         "infekcje: ", plotDFP$N)
+                         "N: ", plotDFP$N)
       theGraphP <- plotDFP %>% plot_ly(x = ~N,
                                        hoverinfo = 'text', text = hovertxtp) %>%
                                add_lines(y = ~p, color = '#E74B74') %>%          
                                layout(xaxis = list(title = 'Wielkość próby'),
                                yaxis = list(title = 'Prawdopodobieństwo wykrycia',
                                             tickangle = -30))
-        
-        
-#        ggplot(plotDFP, aes(x = N, y = p )) + 
-#        geom_line(colour = '#E74B47') +
-#        labs(x = 'Wielkość próby', y = 'Prawdopodbieństwo wykrycia')
-#    ggplotly(theGraphP, text = paste("N:", N, "<br>", "p:", round(p, digits = 3)))
   })
   
   output$wykresN <- renderPlotly({
@@ -100,7 +94,4 @@ shinyServer(function(input, output, session) {
   output$tabelaG <- DT::renderDataTable ({
     ratei()$tabG
   })
-  #output$tabelaP
-  #output$tabelaG
-  #theGraph <- ggplot(plotDF, aes(x = xvar, y = yvar)) + geom_line()
 })
