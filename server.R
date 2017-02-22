@@ -44,7 +44,7 @@ shinyServer(function(input, output, session) {
                           rownames = F, style = 'bootstrap')
   list(tabG = tableG, iR = iR3)
   }
-  #zmienic warunki dla wykresow
+  #wykresy----
   output$wykresP <- renderPlotly({
       plotDFP <- data.frame(probability1()$prDF)
       hovertxtp <- paste("p: ", round(plotDFP$p, digits = 2), "<br>",
@@ -83,6 +83,7 @@ shinyServer(function(input, output, session) {
                                                    tickangle = -30))
   })
   
+  #tabele----
   output$tabelaP <- DT::renderDataTable ({
     probability1()$tabP
   })
