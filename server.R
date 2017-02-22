@@ -11,9 +11,15 @@ shinyServer(function(input, output, session) {
     sampleN1 <- seq(input$mmNumber[1], input$mmNumber[2])
     probabilityC <- 1-(1-input$infR*input$czTp)^sampleN1
     probabilityDF <- as.data.frame(cbind('p'= probabilityC, 'N' = sampleN1))
-    tablePR <- DT::datatable(data.frame( 'N' = sampleN1, 'p'= probabilityC),
-                             class = 'stripe hover dt-head-center order-column',
-                             rownames = F, style = 'bootstrap')
+    tablePR <- DT::datatable(data.frame('N' = sampleN1,
+                                        'p'= round(probabilityC, digits = 3)),
+                             class = 'table-condensed stripe hover order-column',
+                             rownames = F, style = 'bootstrap', selection = 'none',
+                             options = list(autoWidth = T, columnDefs =
+                                              list(list(className = 'dt-right',
+                                                        targets = 0:1),
+                                                   list(width = '70px',
+                                                        targets = 0:1))))
     list(tabP = tablePR, prDF = probabilityDF)
   }
   
@@ -23,9 +29,13 @@ shinyServer(function(input, output, session) {
    infRa2 <- seq(input$mmInf[1], input$mmInf[2], 0.0005)
    sampleN2 <- (log(1-input$probaB)/log(1-infRa2))/input$czTn
    saN2 <- as.data.frame(cbind('N' = sampleN2, 'infekcje' = infRa2))
-   tableSMP <- DT::datatable(data.frame('Częstość infekcji' = infRa2, 'N' = sampleN2),
-                             class = 'stripe hover dt-head-center order-column',
-                             rownames = F, style = 'bootstrap')
+   tableSMP <- DT::datatable(data.frame('Częstość infekcji' = infRa2,
+                                        'N' = ceiling(sampleN2)),
+                             class = 'table-condensed stripe hover dt[-head|-body]-left order-column',
+                             rownames = F, style = 'bootstrap', selection = 'none',
+                             options = list(columnDefs =
+                                              list(list(className = 'dt-left',
+                                                        targets = 0:1))))
    list(tabN = tableSMP, saN = saN2)
    }
   
@@ -35,9 +45,13 @@ shinyServer(function(input, output, session) {
   samN3 <- seq(1, input$sampleN3)
   infRa3 <- ((1-(nthroot((1-input$probaB3), samN3)))*1000)/input$czTg
   iR3 <- as.data.frame(cbind('Maks.L.Infekcji' = infRa3, 'N' = samN3))
-  tableG <- DT::datatable(data.frame('N' = samN3, 'Graniczny poziom infekcji' = infRa3),
-                          class = 'stripe hover dt-head-center order-column',
-                          rownames = F, style = 'bootstrap')
+  tableG <- DT::datatable(data.frame('N' = samN3,
+                                     'Graniczny poziom infekcji' = floor(infRa3)),
+                          class = 'table-condensed stripe hover order-column',
+                          rownames = F, style = 'bootstrap', selection = 'none',
+                          options = list(columnDefs =
+                                           list(list(className = 'dt-left',
+                                                     targets = 0:1))))
   list(tabG = tableG, iR = iR3)
   }
   #wykresy----
@@ -81,7 +95,7 @@ shinyServer(function(input, output, session) {
   #tabele----
   output$tabelaP <- DT::renderDataTable ({
     probabilityF()$tabP
-  })
+    })
   
   output$tabelaN <- DT::renderDataTable ({
     smpF()$tabN
@@ -91,3 +105,6 @@ shinyServer(function(input, output, session) {
     rateiF()$tabG
   })
 })
+
+#opcjonalnie----
+
