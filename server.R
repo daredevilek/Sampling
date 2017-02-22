@@ -1,6 +1,6 @@
 library(shiny)
 library(pracma) # library for the function nthroot
-library(plyr)
+library(dplyr)
 require(plotly)
 library(DT)
 
@@ -19,7 +19,6 @@ shinyServer(function(input, output, session) {
                              class = 'stripe hover dt-head-center order-column',
                              rownames = F, style = 'bootstrap')
     list(tabP = tablePR, prDF = probabDF)
-    #list(pe1 = probab1, ne1 = sampleN1)
   }
   
   #minimalna wielkosc proby do wykrycia danego poziomu infekcyjnosci
@@ -47,27 +46,47 @@ shinyServer(function(input, output, session) {
   }
   #zmienic warunki dla wykresow
   output$wykresP <- renderPlotly({
-      plotDFP <- data.frame(probability1()$prDF)#xvar = probability1()$ne1, yvar = probability1()$pe1)
-      theGraphP <- ggplot(plotDFP, aes(x = N, y = p )) + 
-        geom_line(colour = '#E74B47') +
-        labs(x = 'Wielkość próby', y = 'Prawdopodbieństwo wykrycia')
-    ggplotly(theGraphP)
+      plotDFP <- data.frame(probability1()$prDF)
+      hovertxtp <- paste("p: ", round(plotDFP$p, digits = 2), "<br>",
+                         "infekcje: ", plotDFP$N)
+      theGraphP <- plotDFP %>% plot_ly(x = ~N,
+                                       hoverinfo = 'text', text = hovertxtp) %>%
+                               add_lines(y = ~p, color = '#E74B74') %>%          
+                               layout(xaxis = list(title = 'Wielkość próby'),
+                               yaxis = list(title = 'Prawdopodobieństwo wykrycia',
+                                            tickangle = -30))
+        
+        
+#        ggplot(plotDFP, aes(x = N, y = p )) + 
+#        geom_line(colour = '#E74B47') +
+#        labs(x = 'Wielkość próby', y = 'Prawdopodbieństwo wykrycia')
+#    ggplotly(theGraphP, text = paste("N:", N, "<br>", "p:", round(p, digits = 3)))
   })
   
   output$wykresN <- renderPlotly({
-      plotDFN <- data.frame(smp()$saN)#xvar = smp()$infRa2, yvar = smp()$sampleN2)
-      theGraphN <- ggplot(plotDFN, aes(x = N, y = infekcje)) + 
-        geom_line(colour = '#E74B47') +
-        labs(x = 'Częstość infekcji', y = 'Wielkość próby')
-      ggplotly(theGraphN)
-  })
+      plotDFN <- data.frame(smp()$saN)
+      hovertxtn <- paste("N: ", ceiling(plotDFN$N), "<br>",
+                         "infekcje: ", round(plotDFN$infekcje, digits = 4))
+      theGraphN <- plotDFN %>% plot_ly(x = ~infekcje,
+                                       hoverinfo = 'text', text = hovertxtn) %>% 
+                               add_lines(y=~N, name = 'linia',
+                                         color = '#E74B74') %>%          
+                               layout(xaxis = list(title = 'Poziom infekcji'),
+                                      yaxis = list(title = 'Wielkość próby',
+                                                   tickangle = -30))
+      })
   
   output$wykresG <- renderPlotly({
-      plotDFG <- data.frame(ratei()$iR)#xvar = ratei()$samN3, yvar = ratei()$infRa3)
-      theGraphG <- ggplot(plotDFG, aes(x = Maks.L.Infekcji, y = N)) +
-        geom_line(colour = '#E74B47') +
-        labs(x = 'Wielkość próby', y = 'Graniczna częstość infekcji (na 1000)')
-      ggplotly(theGraphG)
+      
+      plotDFG <- data.frame(ratei()$iR)
+      hovertxtg <- paste("infekcje: ", round(plotDFG$Maks.L.Infekcji, digits = 0),
+                      "<br>", "N: ", ceiling(plotDFG$N))
+      theGraphG <- plotDFG %>% plot_ly(x = ~N,
+                                       hoverinfo = 'text', text = hovertxtg) %>% 
+                               add_lines(y = ~Maks.L.Infekcji, color = '#e74b74') %>%
+                               layout(xaxis = list(title = 'Wielkość próby'),
+                                      yaxis = list(title = 'Graniczny poziom infekcji (na 1000)',
+                                                   tickangle = -30))
   })
   
   output$tabelaP <- DT::renderDataTable ({

@@ -1,6 +1,6 @@
 library(shiny)
 library(pracma) # library for the function nthroot
-library(plyr)
+library(dplyr)
 require(plotly)
 library(DT)
 
