@@ -1,3 +1,4 @@
+source('helpers.R')
 library(shiny)
 library(pracma) # library for the function nthroot
 library(dplyr)
@@ -7,8 +8,7 @@ library(DT)
 shinyUI(
   navbarPage(
     'Próbkowanie i prawdopodobieństwo',
-    #includeCSS('sliders.css'), 
-    theme = 'bootstrap.css', inverse = T, 
+    theme = 'bootstrap.css', inverse = T,
     #pierwzy tab----
     tabPanel(
       'Prawdopodobieństwo wykrycia',
@@ -33,7 +33,8 @@ shinyUI(
             label = 'Liczebność próby (min - max)',
             min = 25, max = 3600, step = 25, value = c(200, 1000)
             ),
-          br()),
+          br(),
+          footer),
           #main panel----
           mainPanel(tabsetPanel(
             tabPanel(
@@ -67,7 +68,8 @@ shinyUI(
             label = 'Poziom infekcji (min - max)',
             min = 0.000, max = 0.050, value = c(0.001, 0.030), step = 0.0005, sep = ''
             ),
-          br()),
+          br(),
+          footer),
           #main panel----
           mainPanel(tabsetPanel(
             tabPanel(
@@ -101,7 +103,8 @@ shinyUI(
             label = 'Liczebność próby',
             val = 800, min = 0, max = 4000, step = 25
         ),
-        br()),
+        br(),
+        footer),
         #main panel----
       mainPanel(tabsetPanel(
         tabPanel(
@@ -110,15 +113,15 @@ shinyUI(
         tabPanel(
           title = 'Tabela', DT::dataTableOutput('tabelaG')
         )))
-    )),
+    ))))
     #footer----
-    tags$div(class = 'panel-footer', style = 
-                'position: fixed; display: block;
-                bottom: 5px; width = 100%',  
-                tags$p('Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
-                  'dla', a('R Studio', href = 'http://www.rstudio.com') , 'na podstawie',
-                  a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')
-                ))))
+    #tags$div(class = 'panel-footer', style = 
+    #            'position: fixed; display: block;
+    #            bottom: 5px; width = 100%',  
+    #            tags$p('Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
+    #              'dla', a('R Studio', href = 'http://www.rstudio.com') , 'na podstawie',
+    #              a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')
+    #            ))))
     
     
     

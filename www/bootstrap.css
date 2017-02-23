@@ -4369,6 +4369,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-nav > li > a {
     padding-top: 19.5px;
     padding-bottom: 19.5px;
+    /*border-style: none none none dotted;*/
+    /*border-color: #e74b47;*/
   }
 }
 .navbar-form {
@@ -4605,7 +4607,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
   color: #ffffff;
-  background-color: #e74b47;
+/*  background-color: #e74b47;*/
 }
 .navbar-inverse .navbar-text {
   color: #ffffff;

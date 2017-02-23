@@ -1,3 +1,4 @@
+source('helpers.R')
 library(shiny)
 library(pracma) # library for the function nthroot
 library(dplyr)
