@@ -4369,8 +4369,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-nav > li > a {
     padding-top: 19.5px;
     padding-bottom: 19.5px;
-    /*border-style: none none none dotted;*/
-    /*border-color: #e74b47;*/
   }
 }
 .navbar-form {
@@ -4614,6 +4612,9 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 }
 .navbar-inverse .navbar-nav > li > a {
   color: #ffffff;
+  border-style: none none none solid;
+  border-width: 1px;
+  border-color: #ffffff;
 }
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
