@@ -114,7 +114,7 @@ shinyUI(
     #footer----
     tags$div(class = 'panel-footer', style = 
                 'position: fixed; display: block;
-                bottom: 5px; margin: 0; left: 0; right = 0; width = 100%',  
+                bottom: 5px; width = 100%',  
                 tags$p('Aplikacja zbudowana w', a('Shiny', href = 'http://www.rstudio.com/shiny'),
                   'dla', a('R Studio', href = 'http://www.rstudio.com') , 'na podstawie',
                   a('kodu Renke Luekhen.', href = 'https://goo.gl/FopD9R')

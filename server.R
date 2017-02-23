@@ -16,10 +16,10 @@ shinyServer(function(input, output, session) {
                              class = 'table-condensed stripe hover order-column',
                              rownames = F, style = 'bootstrap', selection = 'none',
                              options = list(autoWidth = T, columnDefs =
-                                              list(list(className = 'dt-right',
+                                              list(list(className = 'dt-center',
                                                         targets = 0:1),
-                                                   list(width = '70px',
-                                                        targets = 0:1))))
+                                                   list(className = 'dt', width = '200px',
+                                                        targets = '_all'))))
     list(tabP = tablePR, prDF = probabilityDF)
   }
   
@@ -34,8 +34,10 @@ shinyServer(function(input, output, session) {
                              class = 'table-condensed stripe hover dt[-head|-body]-left order-column',
                              rownames = F, style = 'bootstrap', selection = 'none',
                              options = list(columnDefs =
-                                              list(list(className = 'dt-left',
-                                                        targets = 0:1))))
+                                              list(list(className = 'dt-center',
+                                                        targets = 0:1),
+                                                   list(className = 'dt', width = '200px',
+                                                        targets = '_all'))))
    list(tabN = tableSMP, saN = saN2)
    }
   
@@ -50,8 +52,10 @@ shinyServer(function(input, output, session) {
                           class = 'table-condensed stripe hover order-column',
                           rownames = F, style = 'bootstrap', selection = 'none',
                           options = list(columnDefs =
-                                           list(list(className = 'dt-left',
-                                                     targets = 0:1))))
+                                           list(list(className = 'dt-center',
+                                                     targets = 0:1),
+                                                list(className = 'dt', width = '200px',
+                                                     targets = '_all'))))
   list(tabG = tableG, iR = iR3)
   }
   #wykresy----
