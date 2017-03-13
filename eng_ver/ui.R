@@ -9,25 +9,25 @@ shinyUI(
   navbarPage(
     'Sampling and probability',
     theme = 'bootstrap.css', inverse = T,
-    #pierwzy tab----
+    #first tab----
     tabPanel(
       'Probability of detection',
       sidebarLayout(
         position = 'left',
         sidebarPanel(
-          #slider czulosc----
+          #slider sensitivity----
           sliderInput(
             inputId = 'czTp',
             label = 'Test sensitivity',
             min = 0.60, max = 1.00, value = 0.90,step = 0.05
             ),
-          #slider poziom inf----
+          #slider inf rate----
           sliderInput(
             inputId = "infR",
             label = "Infection rate",
             min = 0.000, max = 0.0500, value = 0.0030, step = 0.0005, sep = ''
             ),
-          #slider n proby----
+          #slider n----
           sliderInput(
             inputId = 'mmNumber',
             label = 'Sample size (min - max)',
@@ -44,19 +44,19 @@ shinyUI(
               title = 'Tabel', DT::dataTableOutput('tabelaP')
               )))
         )),
-    #drugi tab----
+    #second tab----
     tabPanel(
       'Min. sample size',
       sidebarLayout(
         position = 'left',
         sidebarPanel(
-          #slider czulosc----
+          #slider sensitivity----
           sliderInput(
             inputId = 'czTn',
             label = 'Test sensitivity',
             min = 0.60, max = 1.00, value = 0.90,step = 0.05
             ),
-          #slider p wykrycia----
+          #slider p detection----
           sliderInput(
             inputId = 'probaB',
             label = 'Probability of detection',
@@ -79,13 +79,13 @@ shinyUI(
               title = 'Tabel', DT::dataTableOutput('tabelaN')
               )))
         )),
-    #trzeci tab----
+    #third tab----
     tabPanel(
       'Graniczna wielkość infekcji', 
       sidebarLayout(
         position = 'left',
         sidebarPanel(
-          #slider czulosc----
+          #slider sensitivity----
           sliderInput(
             inputId = 'czTg',
             label = 'Test sensitivity',
