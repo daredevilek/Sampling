@@ -28,7 +28,7 @@ shinyServer(function(input, output, session) {
   #z danym prawdopodobienstwem
   smpF <- function(){
    infRa2 <- seq(input$mmInf[1], input$mmInf[2], 0.0005)
-   sampleN2 <- (log(1-input$probaB)/log(1-infRa2))/input$czTn
+   sampleN2 <- (log(1-input$probaB)/log(1-infRa2*input$czTn))
    saN2 <- as.data.frame(cbind('N' = sampleN2, 'infekcje' = infRa2))
    tableSMP <- DT::datatable(data.frame('Częstość infekcji' = infRa2,
                                         'N' = ceiling(sampleN2)),
